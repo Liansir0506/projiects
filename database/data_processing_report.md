@@ -124,7 +124,7 @@
 | 类别映射表 class_mapping.json | `database/class_mapping.json` | ✅ 已交付 | v2.0 含 class_id / class_name / display_name / source_paths |
 | 数据处理统计 JSON | `database/processing_report.json` | ✅ 已交付 | 含 class_counts、split_totals、augmentation_info |
 | 数据处理报告 Markdown | `database/data_processing_report.md` | ✅ 已交付 | 本文件 |
-| 数据集溯源清单 manifest.csv | `../data/合并数据集/manifest.csv` | ✅ 已交付 (存 data 目录) | 42,826 条，因体积大不入 git |
+| 数据集溯源清单 manifest.csv | `database/manifest.csv` | ✅ 已交付 | 42,826 条完整溯源记录（含 7,460 条增强记录） |
 | 离线增强清单 manifest_augmented.csv | `database/manifest_augmented.csv` | ✅ 已交付 | 7,460 条增强源-目标映射 |
 | 数据集合并代码 | `database/merge_datasets.py` | ✅ 已交付 | 纯 Python；支持多源命名对齐 + 类别映射 + 报告生成 |
 | 在线训练增强模板 | `database/augment_online_transforms.py` | ✅ 已交付 | `get_train_transform(224)` 供 3/4 号模型训练使用 |
