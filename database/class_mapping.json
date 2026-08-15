@@ -1,0 +1,184 @@
+{
+  "metadata": {
+    "version": "2.0",
+    "description": "类别映射表：原始数据源路径 -> 统一标准类别（含 class_id / class_name / display_name）",
+    "total_classes": 15,
+    "total_source_paths": 59,
+    "class_id_order": "alphabetical, aligned with processing_report.json classes",
+    "created_at": "2026-08-15",
+    "author": "2号-数据处理",
+    "notes": [
+      "class_id: 整数索引 0~14，模型训练标签与接口 predictions[].class_id 依据此值",
+      "class_name: 英文类别名，对应 train/val/test 目录下的文件夹名",
+      "display_name: 中文显示名，前端展示与 7 号知识库匹配依据",
+      "source_paths: 该类别在原始数据源中的所有路径（含命名差异）",
+      "数据集1 缺少 Common Root Rot 类别，故该类只有 3 个 source_paths"
+    ]
+  },
+  "classes": [
+    {
+      "class_id": 0,
+      "class_name": "Aphid",
+      "display_name": "小麦蚜虫",
+      "source_paths": [
+        "archive/test/aphid_test",
+        "archive/train/Aphid",
+        "archive/valid/aphid_valid",
+        "数据集1/Aphid"
+      ]
+    },
+    {
+      "class_id": 1,
+      "class_name": "Black Rust",
+      "display_name": "小麦秆锈病",
+      "source_paths": [
+        "archive/test/black_rust_test",
+        "archive/train/Black Rust",
+        "archive/valid/black_rust_valid",
+        "数据集1/Black Rust"
+      ]
+    },
+    {
+      "class_id": 2,
+      "class_name": "Blast",
+      "display_name": "小麦瘟病",
+      "source_paths": [
+        "archive/test/blast_test",
+        "archive/train/Blast",
+        "archive/valid/blast_test_valid",
+        "数据集1/Blast"
+      ]
+    },
+    {
+      "class_id": 3,
+      "class_name": "Brown Rust",
+      "display_name": "小麦叶锈病",
+      "source_paths": [
+        "archive/test/brown_rust_test",
+        "archive/train/Brown Rust",
+        "archive/valid/brown_rust_valid",
+        "数据集1/Brown Rust"
+      ]
+    },
+    {
+      "class_id": 4,
+      "class_name": "Common Root Rot",
+      "display_name": "小麦根腐病",
+      "source_paths": [
+        "archive/test/common_root_rot_test",
+        "archive/train/Common Root Rot",
+        "archive/valid/common_root_rot_valid"
+      ]
+    },
+    {
+      "class_id": 5,
+      "class_name": "Fusarium Head Blight",
+      "display_name": "小麦赤霉病",
+      "source_paths": [
+        "archive/test/fusarium_head_blight_test",
+        "archive/train/Fusarium Head Blight",
+        "archive/valid/fusarium_head_blight_valid",
+        "数据集1/Fusarium Head Blight"
+      ]
+    },
+    {
+      "class_id": 6,
+      "class_name": "Healthy Wheat",
+      "display_name": "健康小麦",
+      "source_paths": [
+        "archive/test/healthy_test",
+        "archive/train/Healthy",
+        "archive/valid/healthy_valid",
+        "数据集1/Healthy Wheat"
+      ]
+    },
+    {
+      "class_id": 7,
+      "class_name": "Leaf Blight",
+      "display_name": "小麦叶枯病",
+      "source_paths": [
+        "archive/test/leaf_blight_test",
+        "archive/train/Leaf Blight",
+        "archive/valid/leaf_blight_valid",
+        "数据集1/Leaf Blight"
+      ]
+    },
+    {
+      "class_id": 8,
+      "class_name": "Mildew",
+      "display_name": "小麦白粉病",
+      "source_paths": [
+        "archive/test/mildew_test",
+        "archive/train/Mildew",
+        "archive/valid/mildew_valid",
+        "数据集1/Mildew"
+      ]
+    },
+    {
+      "class_id": 9,
+      "class_name": "Mite",
+      "display_name": "小麦叶螨",
+      "source_paths": [
+        "archive/test/mite_test",
+        "archive/train/Mite",
+        "archive/valid/mite_valid",
+        "数据集1/Mite"
+      ]
+    },
+    {
+      "class_id": 10,
+      "class_name": "Septoria",
+      "display_name": "小麦叶斑病",
+      "source_paths": [
+        "archive/test/septoria_test",
+        "archive/train/Septoria",
+        "archive/valid/septoria_valid",
+        "数据集1/Septoria"
+      ]
+    },
+    {
+      "class_id": 11,
+      "class_name": "Smut",
+      "display_name": "小麦黑粉病",
+      "source_paths": [
+        "archive/test/smut_test",
+        "archive/train/Smut",
+        "archive/valid/smut_valid",
+        "数据集1/Smut"
+      ]
+    },
+    {
+      "class_id": 12,
+      "class_name": "Stem fly",
+      "display_name": "小麦茎蝇",
+      "source_paths": [
+        "archive/test/stem_fly_test",
+        "archive/train/Stem fly",
+        "archive/valid/stem_fly_valid",
+        "数据集1/Stem fly"
+      ]
+    },
+    {
+      "class_id": 13,
+      "class_name": "Tan spot",
+      "display_name": "小麦褐斑病",
+      "source_paths": [
+        "archive/test/tan_spot_test",
+        "archive/train/Tan spot",
+        "archive/valid/tan_spot_valid",
+        "数据集1/Tan spot"
+      ]
+    },
+    {
+      "class_id": 14,
+      "class_name": "Yellow Rust",
+      "display_name": "小麦条锈病",
+      "source_paths": [
+        "archive/test/yellow_rust_test",
+        "archive/train/Yellow Rust",
+        "archive/valid/yellow_rust_valid",
+        "数据集1/Yellow Rust"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "class_counts": {
+    "Aphid": {
+      "train": 2000,
+      "validation": 214,
+      "test": 147
+    },
+    "Black Rust": {
+      "train": 2000,
+      "validation": 254,
+      "test": 167
+    },
+    "Blast": {
+      "train": 2000,
+      "validation": 150,
+      "test": 115
+    },
+    "Brown Rust": {
+      "train": 4113,
+      "validation": 833,
+      "test": 456
+    },
+    "Common Root Rot": {
+      "train": 2000,
+      "validation": 20,
+      "test": 50
+    },
+    "Fusarium Head Blight": {
+      "train": 2000,
+      "validation": 275,
+      "test": 178
+    },
+    "Healthy Wheat": {
+      "train": 3544,
+      "validation": 747,
+      "test": 413
+    },
+    "Leaf Blight": {
+      "train": 2000,
+      "validation": 189,
+      "test": 134
+    },
+    "Mildew": {
+      "train": 2000,
+      "validation": 241,
+      "test": 160
+    },
+    "Mite": {
+      "train": 2000,
+      "validation": 180,
+      "test": 130
+    },
+    "Septoria": {
+      "train": 2141,
+      "validation": 306,
+      "test": 193
+    },
+    "Smut": {
+      "train": 2227,
+      "validation": 282,
+      "test": 181
+    },
+    "Stem fly": {
+      "train": 2000,
+      "validation": 67,
+      "test": 73
+    },
+    "Tan spot": {
+      "train": 2000,
+      "validation": 174,
+      "test": 127
+    },
+    "Yellow Rust": {
+      "train": 3383,
+      "validation": 615,
+      "test": 347
+    }
+  },
+  "split_totals": {
+    "train": 35408,
+    "validation": 4547,
+    "test": 2871
+  },
+  "total_images": 42826,
+  "classes": [
+    "Aphid",
+    "Black Rust",
+    "Blast",
+    "Brown Rust",
+    "Common Root Rot",
+    "Fusarium Head Blight",
+    "Healthy Wheat",
+    "Leaf Blight",
+    "Mildew",
+    "Mite",
+    "Septoria",
+    "Smut",
+    "Stem fly",
+    "Tan spot",
+    "Yellow Rust"
+  ],
+  "source_file_prefixes": {
+    "dataset1": "dataset1__",
+    "archive": "archive__"
+  },
+  "augmentation_info": {
+    "applied": true,
+    "target_per_class_train": 2000,
+    "newly_added_train_images": 7460,
+    "augmentation_pipeline": "RandomResizedCrop(224,scale=0.8-1.0)+HFlip(p=0.5)+VFlip(p=0.3)+Rotate(±15)+Brightness/Contrast(±0.2)+GaussianBlur(p=0.3)",
+    "notes": "只对 train 样本数 < target 的类别进行线下增强；val/test 保持不动；不修改 saturation/hue"
+  }
+}
