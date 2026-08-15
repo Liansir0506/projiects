@@ -7,11 +7,15 @@
   3. 同时输出 manifest_augmented.csv（增强明细）并追加到主 manifest.csv
   4. 更新 processing_report.json 的 train 类别统计
   5. 可复现：固定随机种子
-路径约定：
-  本脚本默认与数据集目录同级放置在项目中：
-    wheat-disease-monitor/database/augment_offline_few_shot.py
-    data/合并数据集/train|validation|test
-  脚本会自动根据自身位置推导数据集根目录，也可用 --dataset_root 覆盖。
+路径约定（项目根 = wheat-disease-monitor/）：
+    wheat-disease-monitor/               <- 项目根
+    ├── database/augment_offline_few_shot.py   (本脚本)
+    └── data/合并数据集/                  <- 数据集根目录
+        ├── train/|validation/|test/
+        ├── manifest.csv
+        └── processing_report.json
+  脚本自动根据自身位置推导数据集根目录（向上 1 级到项目根，再进 data/合并数据集），
+  也可用 --dataset_root 覆盖。详见 database/路径配置说明.md。
 作者：2 号（数据处理）
 """
 import argparse
@@ -28,11 +32,11 @@ IMG_EXTS = {'.jpg', '.jpeg', '.png', '.bmp', '.webp'}
 
 
 def default_dataset_root() -> Path:
-    """根据本脚本位置推导数据集根目录（相对路径：项目根 -> ../data/合并数据集）"""
-    # __file__ = <repo>/wheat-disease-monitor/database/augment_offline_few_shot.py
-    script_dir = Path(__file__).resolve().parent          # .../wheat-disease-monitor/database
-    repo_root = script_dir.parent.parent                   # 项目根 (<repo>)
-    default = repo_root / 'data' / '合并数据集'
+    """根据本脚本位置推导数据集根目录（项目根 = wheat-disease-monitor/）"""
+    # __file__ = wheat-disease-monitor/database/augment_offline_few_shot.py
+    script_dir = Path(__file__).resolve().parent          # wheat-disease-monitor/database/
+    project_root = script_dir.parent                       # wheat-disease-monitor/
+    default = project_root / 'data' / '合并数据集'          # wheat-disease-monitor/data/合并数据集/
     return default
 
 

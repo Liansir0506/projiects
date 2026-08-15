@@ -13,10 +13,9 @@ import shutil
 from collections import Counter, OrderedDict
 from pathlib import Path
 
-# -------- 路径（相对推导） --------
+# -------- 路径（相对推导，项目根 = wheat-disease-monitor/） --------
 PROJ_DIR = Path(__file__).resolve().parent      # wheat-disease-monitor/
-REPO_ROOT = PROJ_DIR.parent                      # 02NLP-project/
-DATA_DIR = REPO_ROOT / 'data' / '合并数据集'
+DATA_DIR = PROJ_DIR / 'data' / '合并数据集'      # wheat-disease-monitor/data/合并数据集/
 DB_DIR = PROJ_DIR / 'database'
 DOCS_DIR = PROJ_DIR / 'docs'
 

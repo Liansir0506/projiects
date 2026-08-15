@@ -4,12 +4,13 @@ class_mapping.json 升级脚本
 作用：
   读取原始的"路径 -> 类别名"映射，升级为包含 class_id / class_name / display_name / source_paths 的完整版
   class_id 顺序与 processing_report.json 的 classes 数组保持一致（字母序 0~14）
-路径约定：
-  脚本默认与数据集同级放置在项目中：
-    wheat-disease-monitor/upgrade_class_mapping.py
-    data/合并数据集/class_mapping.json
-    data/合并数据集/processing_report.json
-  会自动根据自身位置推导路径；无需写死绝对路径。
+路径约定（项目根 = wheat-disease-monitor/）：
+    wheat-disease-monitor/               <- 项目根
+    ├── upgrade_class_mapping.py              (本脚本)
+    └── data/合并数据集/
+        ├── class_mapping.json
+        └── processing_report.json
+  脚本自动根据自身位置推导路径（向上 1 级到项目根，再进 data/合并数据集）。
 作者：2 号（数据处理）
 """
 import json
@@ -18,10 +19,9 @@ from pathlib import Path
 
 
 def locate_data_dir() -> Path:
-    """根据脚本位置推导 data/合并数据集 目录（相对路径：脚本所在 repo 根 -> data/合并数据集）"""
+    """根据脚本位置推导 data/合并数据集 目录（项目根 = wheat-disease-monitor/）"""
     script_dir = Path(__file__).resolve().parent   # wheat-disease-monitor/
-    repo_root = script_dir.parent                   # 02NLP-project/
-    return repo_root / 'data' / '合并数据集'
+    return script_dir / 'data' / '合并数据集'        # wheat-disease-monitor/data/合并数据集/
 
 
 def main():

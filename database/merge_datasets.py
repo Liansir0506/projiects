@@ -14,10 +14,10 @@
     class_mapping.json         原始路径命名 -> 标准类别名
     processing_report.json     统计报告
 
-使用：
+使用（路径建议用相对项目根的相对路径）：
   python merge_datasets.py \
-      --sources 数据集1=D:/path/to/数据集1  archive=D:/path/to/archive \
-      --output  D:/path/to/合并数据集
+      --sources 数据集1=./data/数据集1  archive=./data/archive \
+      --output  ./data/合并数据集
 
 作者：2 号（数据处理）
 """
@@ -249,7 +249,7 @@ def main():
     parser.add_argument(
         '--sources',
         nargs='+', required=True,
-        help='数据源列表，格式: 名称=路径  如: "数据集1=D:/xxx/数据集1_已划分" "archive=D:/xxx/archive"',
+        help='数据源列表，格式: 名称=路径  如: "数据集1=./data/数据集1_已划分" "archive=./data/archive"',
     )
     parser.add_argument('--output', type=str, required=True, help='合并输出根目录')
     args = parser.parse_args()
