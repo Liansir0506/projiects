@@ -23,6 +23,7 @@ from config import (
     CONFIDENCE_THRESHOLD
 )
 from service.diagnose_service import DiagnoseService
+from service.growth_service import GrowthService
 import adapter.external_adapter as adapter
 
 # ===== 创建FastAPI应用 =====
@@ -227,6 +228,68 @@ async def set_low_confidence(enable: bool = True):
         "force_low_confidence": enable,
         "message": f"低置信度强制模式已{'开启' if enable else '关闭'}"
     })
+
+
+# ===== 8. 长势评估：提交评估 =====
+@app.post("/api/v1/growth/evaluate", tags=["长势评估"])
+async def evaluate_growth(
+    growth_stage: str = Form(..., description="生育期：tillering(分蘖期)/reviving(返青期)/jointing(拔节期)/heading(抽穗期)/filling(灌浆期)"),
+    temperature: float = Form(..., description="日均温(℃)"),
+    soil_moisture: float = Form(..., description="土壤湿度(%田间持水量)"),
+    soil_fertility: float = Form(..., description="土壤肥力指数(0-100)"),
+    sunlight: float = Form(..., description="光照时长(小时/天)"),
+    farming_operation: float = Form(70.0, description="农事操作完成度(0-100)，默认70"),
+    pest_risk: float = Form(20.0, description="病虫害风险指数(0-100，越低越好)，默认20"),
+    visual_condition: float = Form(None, description="视觉苗情评分(0-100)，可选"),
+    region: str = Form("", description="地区"),
+    field: str = Form("", description="地块名称")
+):
+    """
+    小麦长势综合评估接口（专家规则引擎+加权评分法）
+    输入环境、土壤、农事等数据，输出长势评分、等级、短板分析和干预建议
+    """
+    try:
+        result = GrowthService.evaluate(
+            growth_stage=growth_stage,
+            temperature=temperature,
+            soil_moisture=soil_moisture,
+            soil_fertility=soil_fertility,
+            sunlight=sunlight,
+            farming_operation=farming_operation,
+            pest_risk=pest_risk,
+            visual_condition=visual_condition,
+            region=region,
+            field=field
+        )
+        return success_response(result)
+    except ValueError as e:
+        return error_response(1001, str(e))
+    except Exception as e:
+        return error_response(5005, f"长势评估失败：{str(e)}")
+
+
+# ===== 9. 长势评估：获取支持的生育期列表 =====
+@app.get("/api/v1/growth/stages", tags=["长势评估"])
+async def get_growth_stages():
+    """获取所有支持的小麦生育期列表"""
+    try:
+        stages = GrowthService.get_available_stages()
+        return success_response({"stages": stages})
+    except Exception as e:
+        return error_response(5006, f"获取生育期列表失败：{str(e)}")
+
+
+# ===== 10. 长势评估：获取指定生育期的评分维度和权重 =====
+@app.get("/api/v1/growth/weights", tags=["长势评估"])
+async def get_growth_weights(growth_stage: str = Query(..., description="生育期代码")):
+    """获取指定生育期的评分维度、权重和适宜区间"""
+    try:
+        weights = GrowthService.get_stage_weights(growth_stage)
+        if not weights:
+            return error_response(1001, f"不支持的生育期: {growth_stage}")
+        return success_response(weights)
+    except Exception as e:
+        return error_response(5007, f"获取评分维度失败：{str(e)}")
 
 
 # ===== 启动服务 =====

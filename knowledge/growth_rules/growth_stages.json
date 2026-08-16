@@ -1,0 +1,468 @@
+{
+  "version": "1.0",
+  "description": "小麦各生育期长势评分规则配置（专家规则引擎+加权评分法）",
+  "growth_stages": {
+    "tillering": {
+      "name": "分蘖期",
+      "description": "小麦出苗至越冬前的分蘖生长阶段",
+      "weights": {
+        "temperature": 0.15,
+        "soil_moisture": 0.20,
+        "soil_fertility": 0.20,
+        "sunlight": 0.10,
+        "farming_operation": 0.15,
+        "pest_risk": 0.10,
+        "visual_condition": 0.10
+      },
+      "scoring_rules": {
+        "temperature": {
+          "unit": "℃",
+          "optimal_range": [12, 18],
+          "rules": [
+            {"min": 12, "max": 18, "score": 100, "label": "最适宜分蘖"},
+            {"min": 8, "max": 12, "score": 80, "label": "适宜"},
+            {"min": 18, "max": 22, "score": 75, "label": "偏高，生长偏快"},
+            {"min": 5, "max": 8, "score": 60, "label": "偏低，分蘖缓慢"},
+            {"min": 22, "max": 28, "score": 50, "label": "过高，易旺长"},
+            {"min": 0, "max": 5, "score": 30, "label": "过低，生长停滞"}
+          ]
+        },
+        "soil_moisture": {
+          "unit": "%田间持水量",
+          "optimal_range": [60, 75],
+          "rules": [
+            {"min": 60, "max": 75, "score": 100, "label": "墒情适宜"},
+            {"min": 50, "max": 60, "score": 75, "label": "轻度干旱"},
+            {"min": 75, "max": 85, "score": 75, "label": "偏湿"},
+            {"min": 40, "max": 50, "score": 50, "label": "干旱"},
+            {"min": 85, "max": 100, "score": 45, "label": "过湿，易烂根"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重干旱"}
+          ]
+        },
+        "soil_fertility": {
+          "unit": "综合肥力指数(0-100)",
+          "optimal_range": [70, 90],
+          "rules": [
+            {"min": 70, "max": 90, "score": 100, "label": "肥力充足"},
+            {"min": 50, "max": 70, "score": 75, "label": "肥力中等"},
+            {"min": 90, "max": 100, "score": 70, "label": "肥力过高，易旺长"},
+            {"min": 30, "max": 50, "score": 50, "label": "肥力不足"},
+            {"min": 0, "max": 30, "score": 25, "label": "严重缺肥"}
+          ]
+        },
+        "sunlight": {
+          "unit": "小时/天",
+          "optimal_range": [6, 10],
+          "rules": [
+            {"min": 6, "max": 10, "score": 100, "label": "光照充足"},
+            {"min": 4, "max": 6, "score": 75, "label": "光照偏少"},
+            {"min": 10, "max": 14, "score": 90, "label": "光照充足"},
+            {"min": 2, "max": 4, "score": 50, "label": "光照不足"},
+            {"min": 0, "max": 2, "score": 25, "label": "严重寡照"}
+          ]
+        },
+        "farming_operation": {
+          "unit": "操作完成度(0-100)",
+          "optimal_range": [80, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "农事操作到位"},
+            {"min": 60, "max": 80, "score": 75, "label": "基本到位"},
+            {"min": 40, "max": 60, "score": 50, "label": "操作不足"},
+            {"min": 0, "max": 40, "score": 25, "label": "管理粗放"}
+          ]
+        },
+        "pest_risk": {
+          "unit": "风险等级(0-100,越低越好)",
+          "optimal_range": [0, 30],
+          "rules": [
+            {"min": 0, "max": 30, "score": 100, "label": "病虫害风险低"},
+            {"min": 30, "max": 50, "score": 75, "label": "中等风险"},
+            {"min": 50, "max": 70, "score": 50, "label": "风险较高"},
+            {"min": 70, "max": 100, "score": 25, "label": "高风险，需立即防治"}
+          ]
+        },
+        "visual_condition": {
+          "unit": "视觉评分(0-100)",
+          "optimal_range": [70, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "苗齐苗壮"},
+            {"min": 60, "max": 80, "score": 75, "label": "长势一般"},
+            {"min": 40, "max": 60, "score": 50, "label": "长势偏弱"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重弱苗"}
+          ]
+        }
+      }
+    },
+    "reviving": {
+      "name": "返青期",
+      "description": "越冬后小麦恢复生长至拔节前",
+      "weights": {
+        "temperature": 0.15,
+        "soil_moisture": 0.20,
+        "soil_fertility": 0.20,
+        "sunlight": 0.10,
+        "farming_operation": 0.15,
+        "pest_risk": 0.10,
+        "visual_condition": 0.10
+      },
+      "scoring_rules": {
+        "temperature": {
+          "unit": "℃",
+          "optimal_range": [10, 15],
+          "rules": [
+            {"min": 10, "max": 15, "score": 100, "label": "最适宜返青"},
+            {"min": 8, "max": 10, "score": 80, "label": "适宜"},
+            {"min": 15, "max": 18, "score": 75, "label": "偏高"},
+            {"min": 5, "max": 8, "score": 60, "label": "返青缓慢"},
+            {"min": 18, "max": 22, "score": 50, "label": "过高，易旺长"},
+            {"min": 0, "max": 5, "score": 30, "label": "低温冻害风险"}
+          ]
+        },
+        "soil_moisture": {
+          "unit": "%田间持水量",
+          "optimal_range": [60, 70],
+          "rules": [
+            {"min": 60, "max": 70, "score": 100, "label": "墒情适宜"},
+            {"min": 50, "max": 60, "score": 75, "label": "轻度干旱，需浇返青水"},
+            {"min": 70, "max": 80, "score": 75, "label": "偏湿"},
+            {"min": 40, "max": 50, "score": 50, "label": "干旱"},
+            {"min": 80, "max": 100, "score": 45, "label": "过湿"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重干旱"}
+          ]
+        },
+        "soil_fertility": {
+          "unit": "综合肥力指数(0-100)",
+          "optimal_range": [65, 85],
+          "rules": [
+            {"min": 65, "max": 85, "score": 100, "label": "肥力充足"},
+            {"min": 45, "max": 65, "score": 75, "label": "肥力中等，需追肥"},
+            {"min": 85, "max": 100, "score": 65, "label": "肥力过高，旺长风险"},
+            {"min": 25, "max": 45, "score": 50, "label": "肥力不足"},
+            {"min": 0, "max": 25, "score": 25, "label": "严重缺肥"}
+          ]
+        },
+        "sunlight": {
+          "unit": "小时/天",
+          "optimal_range": [5, 9],
+          "rules": [
+            {"min": 5, "max": 9, "score": 100, "label": "光照充足"},
+            {"min": 3, "max": 5, "score": 70, "label": "光照偏少"},
+            {"min": 9, "max": 12, "score": 90, "label": "光照良好"},
+            {"min": 1, "max": 3, "score": 45, "label": "光照不足"},
+            {"min": 0, "max": 1, "score": 20, "label": "严重寡照"}
+          ]
+        },
+        "farming_operation": {
+          "unit": "操作完成度(0-100)",
+          "optimal_range": [80, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "返青肥水管理到位"},
+            {"min": 60, "max": 80, "score": 70, "label": "基本到位"},
+            {"min": 40, "max": 60, "score": 50, "label": "追肥浇水不及时"},
+            {"min": 0, "max": 40, "score": 25, "label": "管理缺失"}
+          ]
+        },
+        "pest_risk": {
+          "unit": "风险等级(0-100,越低越好)",
+          "optimal_range": [0, 30],
+          "rules": [
+            {"min": 0, "max": 30, "score": 100, "label": "病虫害风险低"},
+            {"min": 30, "max": 50, "score": 70, "label": "纹枯病/红蜘蛛风险"},
+            {"min": 50, "max": 70, "score": 45, "label": "风险较高"},
+            {"min": 70, "max": 100, "score": 20, "label": "高风险"}
+          ]
+        },
+        "visual_condition": {
+          "unit": "视觉评分(0-100)",
+          "optimal_range": [70, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "返青良好，分蘖充足"},
+            {"min": 60, "max": 80, "score": 75, "label": "返青一般"},
+            {"min": 40, "max": 60, "score": 50, "label": "返青偏慢"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重弱苗"}
+          ]
+        }
+      }
+    },
+    "jointing": {
+      "name": "拔节期",
+      "description": "小麦基部节间开始伸长至孕穗",
+      "weights": {
+        "temperature": 0.15,
+        "soil_moisture": 0.20,
+        "soil_fertility": 0.15,
+        "sunlight": 0.10,
+        "farming_operation": 0.15,
+        "pest_risk": 0.15,
+        "visual_condition": 0.10
+      },
+      "scoring_rules": {
+        "temperature": {
+          "unit": "℃",
+          "optimal_range": [12, 16],
+          "rules": [
+            {"min": 12, "max": 16, "score": 100, "label": "最适宜拔节"},
+            {"min": 10, "max": 12, "score": 80, "label": "适宜"},
+            {"min": 16, "max": 20, "score": 70, "label": "偏高，节间过长易倒伏"},
+            {"min": 8, "max": 10, "score": 60, "label": "偏低，拔节缓慢"},
+            {"min": 20, "max": 25, "score": 45, "label": "过高，旺长倒伏风险"},
+            {"min": 0, "max": 8, "score": 30, "label": "低温冷害风险"}
+          ]
+        },
+        "soil_moisture": {
+          "unit": "%田间持水量",
+          "optimal_range": [65, 75],
+          "rules": [
+            {"min": 65, "max": 75, "score": 100, "label": "墒情适宜"},
+            {"min": 55, "max": 65, "score": 75, "label": "轻度干旱，需浇拔节水"},
+            {"min": 75, "max": 85, "score": 70, "label": "偏湿"},
+            {"min": 45, "max": 55, "score": 50, "label": "干旱，影响穗分化"},
+            {"min": 85, "max": 100, "score": 40, "label": "过湿，根系缺氧"},
+            {"min": 0, "max": 45, "score": 25, "label": "严重干旱"}
+          ]
+        },
+        "soil_fertility": {
+          "unit": "综合肥力指数(0-100)",
+          "optimal_range": [60, 80],
+          "rules": [
+            {"min": 60, "max": 80, "score": 100, "label": "肥力适宜"},
+            {"min": 40, "max": 60, "score": 70, "label": "肥力中等，需追拔节肥"},
+            {"min": 80, "max": 100, "score": 60, "label": "氮肥过多，倒伏风险"},
+            {"min": 20, "max": 40, "score": 45, "label": "肥力不足"},
+            {"min": 0, "max": 20, "score": 20, "label": "严重缺肥"}
+          ]
+        },
+        "sunlight": {
+          "unit": "小时/天",
+          "optimal_range": [6, 10],
+          "rules": [
+            {"min": 6, "max": 10, "score": 100, "label": "光照充足"},
+            {"min": 4, "max": 6, "score": 70, "label": "光照偏少"},
+            {"min": 10, "max": 13, "score": 90, "label": "光照良好"},
+            {"min": 2, "max": 4, "score": 45, "label": "光照不足，徒长风险"},
+            {"min": 0, "max": 2, "score": 20, "label": "严重寡照"}
+          ]
+        },
+        "farming_operation": {
+          "unit": "操作完成度(0-100)",
+          "optimal_range": [80, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "拔节肥水管理到位"},
+            {"min": 60, "max": 80, "score": 70, "label": "基本到位"},
+            {"min": 40, "max": 60, "score": 50, "label": "化控/追肥不及时"},
+            {"min": 0, "max": 40, "score": 25, "label": "管理缺失"}
+          ]
+        },
+        "pest_risk": {
+          "unit": "风险等级(0-100,越低越好)",
+          "optimal_range": [0, 30],
+          "rules": [
+            {"min": 0, "max": 30, "score": 100, "label": "病虫害风险低"},
+            {"min": 30, "max": 50, "score": 65, "label": "纹枯病/蚜虫风险"},
+            {"min": 50, "max": 70, "score": 40, "label": "风险较高，需防治"},
+            {"min": 70, "max": 100, "score": 20, "label": "高风险"}
+          ]
+        },
+        "visual_condition": {
+          "unit": "视觉评分(0-100)",
+          "optimal_range": [70, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "植株健壮，节间适中"},
+            {"min": 60, "max": 80, "score": 75, "label": "长势一般"},
+            {"min": 40, "max": 60, "score": 50, "label": "长势偏弱或偏旺"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重异常"}
+          ]
+        }
+      }
+    },
+    "heading": {
+      "name": "抽穗期",
+      "description": "小麦穗部从旗叶鞘抽出至开花",
+      "weights": {
+        "temperature": 0.15,
+        "soil_moisture": 0.20,
+        "soil_fertility": 0.10,
+        "sunlight": 0.15,
+        "farming_operation": 0.10,
+        "pest_risk": 0.20,
+        "visual_condition": 0.10
+      },
+      "scoring_rules": {
+        "temperature": {
+          "unit": "℃",
+          "optimal_range": [15, 20],
+          "rules": [
+            {"min": 15, "max": 20, "score": 100, "label": "最适宜抽穗开花"},
+            {"min": 12, "max": 15, "score": 80, "label": "适宜"},
+            {"min": 20, "max": 25, "score": 70, "label": "偏高"},
+            {"min": 10, "max": 12, "score": 60, "label": "抽穗缓慢"},
+            {"min": 25, "max": 30, "score": 45, "label": "高温逼熟风险"},
+            {"min": 0, "max": 10, "score": 25, "label": "低温影响结实"}
+          ]
+        },
+        "soil_moisture": {
+          "unit": "%田间持水量",
+          "optimal_range": [70, 80],
+          "rules": [
+            {"min": 70, "max": 80, "score": 100, "label": "墒情适宜"},
+            {"min": 60, "max": 70, "score": 75, "label": "轻度干旱"},
+            {"min": 80, "max": 90, "score": 70, "label": "偏湿"},
+            {"min": 50, "max": 60, "score": 50, "label": "干旱，影响结实率"},
+            {"min": 90, "max": 100, "score": 40, "label": "过湿，赤霉病风险"},
+            {"min": 0, "max": 50, "score": 25, "label": "严重干旱"}
+          ]
+        },
+        "soil_fertility": {
+          "unit": "综合肥力指数(0-100)",
+          "optimal_range": [55, 75],
+          "rules": [
+            {"min": 55, "max": 75, "score": 100, "label": "肥力适宜"},
+            {"min": 35, "max": 55, "score": 70, "label": "肥力中等"},
+            {"min": 75, "max": 100, "score": 60, "label": "氮肥过多，贪青晚熟"},
+            {"min": 15, "max": 35, "score": 45, "label": "肥力不足"},
+            {"min": 0, "max": 15, "score": 20, "label": "严重缺肥"}
+          ]
+        },
+        "sunlight": {
+          "unit": "小时/天",
+          "optimal_range": [6, 10],
+          "rules": [
+            {"min": 6, "max": 10, "score": 100, "label": "光照充足，利于开花"},
+            {"min": 4, "max": 6, "score": 70, "label": "光照偏少"},
+            {"min": 10, "max": 13, "score": 90, "label": "光照良好"},
+            {"min": 2, "max": 4, "score": 45, "label": "阴雨寡照，赤霉病风险"},
+            {"min": 0, "max": 2, "score": 20, "label": "严重寡照"}
+          ]
+        },
+        "farming_operation": {
+          "unit": "操作完成度(0-100)",
+          "optimal_range": [80, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "一喷三防到位"},
+            {"min": 60, "max": 80, "score": 70, "label": "基本到位"},
+            {"min": 40, "max": 60, "score": 50, "label": "病虫害防治不及时"},
+            {"min": 0, "max": 40, "score": 25, "label": "管理缺失"}
+          ]
+        },
+        "pest_risk": {
+          "unit": "风险等级(0-100,越低越好)",
+          "optimal_range": [0, 30],
+          "rules": [
+            {"min": 0, "max": 30, "score": 100, "label": "病虫害风险低"},
+            {"min": 30, "max": 50, "score": 60, "label": "赤霉病/蚜虫风险"},
+            {"min": 50, "max": 70, "score": 35, "label": "高风险，需立即防治"},
+            {"min": 70, "max": 100, "score": 15, "label": "严重风险"}
+          ]
+        },
+        "visual_condition": {
+          "unit": "视觉评分(0-100)",
+          "optimal_range": [70, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "穗大粒多，整齐度好"},
+            {"min": 60, "max": 80, "score": 75, "label": "长势一般"},
+            {"min": 40, "max": 60, "score": 50, "label": "穗小或不整齐"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重异常"}
+          ]
+        }
+      }
+    },
+    "filling": {
+      "name": "灌浆期",
+      "description": "小麦开花受精后籽粒形成至成熟",
+      "weights": {
+        "temperature": 0.20,
+        "soil_moisture": 0.20,
+        "soil_fertility": 0.10,
+        "sunlight": 0.15,
+        "farming_operation": 0.10,
+        "pest_risk": 0.15,
+        "visual_condition": 0.10
+      },
+      "scoring_rules": {
+        "temperature": {
+          "unit": "℃",
+          "optimal_range": [18, 22],
+          "rules": [
+            {"min": 18, "max": 22, "score": 100, "label": "最适宜灌浆"},
+            {"min": 15, "max": 18, "score": 80, "label": "适宜，灌浆充分"},
+            {"min": 22, "max": 26, "score": 65, "label": "偏高，灌浆加速"},
+            {"min": 12, "max": 15, "score": 60, "label": "偏低，灌浆缓慢"},
+            {"min": 26, "max": 32, "score": 40, "label": "高温逼熟，千粒重下降"},
+            {"min": 0, "max": 12, "score": 25, "label": "低温影响灌浆"}
+          ]
+        },
+        "soil_moisture": {
+          "unit": "%田间持水量",
+          "optimal_range": [65, 75],
+          "rules": [
+            {"min": 65, "max": 75, "score": 100, "label": "墒情适宜"},
+            {"min": 55, "max": 65, "score": 75, "label": "轻度干旱，需浇灌浆水"},
+            {"min": 75, "max": 85, "score": 70, "label": "偏湿"},
+            {"min": 45, "max": 55, "score": 50, "label": "干旱，籽粒不饱满"},
+            {"min": 85, "max": 100, "score": 40, "label": "过湿，根系早衰"},
+            {"min": 0, "max": 45, "score": 25, "label": "严重干旱，逼熟"}
+          ]
+        },
+        "soil_fertility": {
+          "unit": "综合肥力指数(0-100)",
+          "optimal_range": [50, 70],
+          "rules": [
+            {"min": 50, "max": 70, "score": 100, "label": "肥力适宜，不脱肥不贪青"},
+            {"min": 30, "max": 50, "score": 70, "label": "肥力中等，可叶面喷肥"},
+            {"min": 70, "max": 100, "score": 55, "label": "氮肥过多，贪青晚熟"},
+            {"min": 10, "max": 30, "score": 45, "label": "脱肥，早衰风险"},
+            {"min": 0, "max": 10, "score": 20, "label": "严重脱肥"}
+          ]
+        },
+        "sunlight": {
+          "unit": "小时/天",
+          "optimal_range": [7, 11],
+          "rules": [
+            {"min": 7, "max": 11, "score": 100, "label": "光照充足，干物质积累快"},
+            {"min": 5, "max": 7, "score": 70, "label": "光照偏少"},
+            {"min": 11, "max": 14, "score": 90, "label": "光照良好"},
+            {"min": 3, "max": 5, "score": 45, "label": "光照不足，灌浆慢"},
+            {"min": 0, "max": 3, "score": 20, "label": "严重寡照，千粒重低"}
+          ]
+        },
+        "farming_operation": {
+          "unit": "操作完成度(0-100)",
+          "optimal_range": [80, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "一喷三防+叶面肥到位"},
+            {"min": 60, "max": 80, "score": 70, "label": "基本到位"},
+            {"min": 40, "max": 60, "score": 50, "label": "防治/追肥不及时"},
+            {"min": 0, "max": 40, "score": 25, "label": "管理缺失"}
+          ]
+        },
+        "pest_risk": {
+          "unit": "风险等级(0-100,越低越好)",
+          "optimal_range": [0, 30],
+          "rules": [
+            {"min": 0, "max": 30, "score": 100, "label": "病虫害风险低"},
+            {"min": 30, "max": 50, "score": 60, "label": "蚜虫/锈病风险"},
+            {"min": 50, "max": 70, "score": 35, "label": "风险较高"},
+            {"min": 70, "max": 100, "score": 15, "label": "严重风险，影响产量"}
+          ]
+        },
+        "visual_condition": {
+          "unit": "视觉评分(0-100)",
+          "optimal_range": [70, 100],
+          "rules": [
+            {"min": 80, "max": 100, "score": 100, "label": "落黄正常，籽粒饱满"},
+            {"min": 60, "max": 80, "score": 75, "label": "长势一般"},
+            {"min": 40, "max": 60, "score": 50, "label": "早衰或贪青"},
+            {"min": 0, "max": 40, "score": 25, "label": "严重异常"}
+          ]
+        }
+      }
+    }
+  },
+  "grade_mapping": {
+    "strong": {"min": 80, "max": 100, "label": "壮苗", "description": "长势良好，各项指标达标"},
+    "normal": {"min": 60, "max": 80, "label": "正常苗", "description": "长势一般，部分维度需关注"},
+    "weak": {"min": 40, "max": 60, "label": "弱苗", "description": "长势偏弱，需及时干预"},
+    "very_weak": {"min": 0, "max": 40, "label": "严重弱苗", "description": "长势严重不足，需立即抢救"},
+    "overgrowth": {"min": 90, "max": 100, "label": "旺苗", "description": "氮肥过多或温度偏高导致旺长，存在倒伏风险", "condition": "soil_fertility_score >= 85 AND temperature_score <= 60"}
+  }
+}
