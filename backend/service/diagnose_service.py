@@ -111,40 +111,17 @@ class DiagnoseService:
         knowledge = None
         weather_risk = None
 
-        # ===== 4. 置信度达标则查询知识库和天气 =====
+        # ===== 4. 置信度达标则查询天气风险 =====
         if reliable:
             logger.info(f"置信度达标 ({top1_conf:.2f} >= {CONFIDENCE_THRESHOLD})")
 
-            # 4a. 特殊处理：Healthy Wheat 不调用知识库
-            if top1_class_en == "Healthy Wheat":
-                logger.info("识别结果为 '健康小麦'，不调用知识库")
-                knowledge = None
-            else:
-                try:
-                    # 知识库入参使用中文名称（7号已约定接收中文）
-                    knowledge_raw = adapter.query_knowledge(top1_class)
-                    # 将知识库返回格式转换为契约格式
-                    knowledge = {
-                        "introduction": knowledge_raw.get("disease_name", top1_class),
-                        "symptoms": [knowledge_raw.get("symptom", "暂无症状描述")],
-                        "prevention": [knowledge_raw.get("prevention", "暂无防治建议")]
-                    }
-                    logger.info(f"知识库查询成功: {knowledge}")
-                except Exception as e:
-                    logger.error(f"知识库查询失败: {e}")
-                    knowledge = {
-                        "introduction": top1_class,
-                        "symptoms": ["知识库暂时不可用，请参考当地农技部门建议。"],
-                        "prevention": ["建议咨询当地农业专家。"]
-                    }
-
-            # 4b. 查询天气风险
+            # 查询天气风险
             try:
                 weather_raw = adapter.query_weather_risk(region, growth_stage)
                 weather_risk = {
                     "level": weather_raw.get("risk_level", "unknown"),
                     "summary": weather_raw.get("risk_desc", "天气信息暂不可用"),
-                    "daily": []  # 预留字段，后续8号交付后可扩展
+                    "daily": []
                 }
                 logger.info(f"天气查询成功: {weather_risk}")
             except Exception as e:
