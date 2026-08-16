@@ -1,0 +1,6 @@
+lol: 123
+DOCS_DIR: "chroma/docs"                  # ① 把你的文档都放进这个文件夹
+PERSIST_DIR: "chroma/index_storage"         # ② 索引缓存目录（第二次运行秒开）
+CHUNK_SIZE: 512                       # ③ 每块多大（字符数），越小越精细
+CHUNK_OVERLAP: 64                        # ④ 相邻块重叠量，防止一句话被切两半
+ALPHA: 0.5                       # ⑤ ★★★ 混合权重（核心参数）★★★

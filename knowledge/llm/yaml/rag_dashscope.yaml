@@ -1,0 +1,23 @@
+# ========== 阿里云百炼（DashScope）模型配置 ==========
+DASHSCOPE_API_KEY: "sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"   # 百炼 API Key（config.py 中硬编码优先）
+CHAT_BASE_URL: "https://dashscope.aliyuncs.com/compatible-mode/v1"   # 百炼 OpenAI 兼容端点
+CHAT_MODEL: "qwen-plus"                                              # 对话模型
+EMBED_BASE_URL: "https://dashscope.aliyuncs.com/compatible-mode/v1"  # 百炼 Embedding 兼容端点
+EMBED_MODEL: "text-embedding-v3"                                     # Embedding 模型
+EMBEDDING_DIM: 1024                                                  # 向量维度（text-embedding-v3 默认 1024）
+TEMPERATURE: 0.3                                                     # 采样温度
+
+# ========== 文件与索引 ==========
+DOCS_DIR: "chroma/docs"                # ① 把 pdf/txt/md/docx/doc 放进这个文件夹
+PERSIST_DIR: "chroma/index_storage"    # ② Chroma 索引持久化目录（第二次运行秒开）
+MD5_DIR: "chroma/md5_files"            # ③ 按 MD5 命名的文件存储目录（去重/溯源）
+CHUNK_SIZE: 512                        # ④ 每块多大（字符数），越小越精细
+CHUNK_OVERLAP: 64                      # ⑤ 相邻块重叠量，防止一句话被切两半
+
+# ========== 混合检索 ==========
+ALPHA: 0.5        # ★★★ 混合权重（核心参数）：向量检索占比，BM25 占比为 1-ALPHA ★★★
+TOP_K: 5          # 最终返回条数
+
+# ========== 自动更新 ==========
+AUTO_UPDATE: true           # 开启后：启动时自动增量入库，且后台每轮询一次 docs 目录，放入新文件自动入库
+AUTO_UPDATE_INTERVAL: 60    # 轮询间隔（秒），放文件后最长等待该时长即自动入库；查询时也会即时检测

@@ -1,0 +1,40 @@
+# ============================================================
+# llm 项目依赖清单（Python 3.14 / conda env: agentchat）
+# 安装：pip install -r requirements.txt
+# 生成日期：2026-08-16
+# ============================================================
+
+# ---------- 核心框架：LlamaIndex ----------
+llama-index-core==0.14.23
+llama-index-embeddings-openai==0.6.0
+llama-index-llms-openai-like==0.7.2
+llama-index-retrievers-bm25==0.7.1
+llama-index-vector-stores-chroma==0.5.5
+
+# ---------- 向量数据库 ----------
+chromadb==1.5.9
+
+# ---------- Web 服务 ----------
+fastapi==0.141.1
+uvicorn==0.52.1
+
+# ---------- 数据模型 / 校验 ----------
+pydantic==2.13.4
+
+# ---------- 日志 / 配置 ----------
+loguru==0.7.3
+PyYAML==6.0.3
+
+# ---------- 文档解析 ----------
+pymupdf==1.28.0          # PDF 解析（fitz）
+pypdf==6.16.1            # PDF 解析（PdfReader）
+python-docx==1.2.0       # DOCX 解析
+pywin32==312             # Windows COM（docx/pdf 兼容兜底）
+
+# ---------- 检索 / 分词 ----------
+jieba==0.42.1            # BM25 中文分词
+
+# ---------- 网络请求 ----------
+requests==2.32.5         # 博查联网搜索
+openai==2.53.0           # OpenAI 兼容客户端（百炼）
+
