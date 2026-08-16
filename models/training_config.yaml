@@ -1,0 +1,120 @@
+# ==============================================================================
+# ResNet50 小麦病害分类模型 — 训练配置
+# ==============================================================================
+# 本文件记录模型训练时使用的所有超参数与数据配置，供复现与审计使用。
+# 对应训练脚本：resnet50_image_classification.py
+# ==============================================================================
+
+# -------------------- 基础信息 --------------------
+experiment:
+  name: "ResNet50 小麦病害 15 分类"
+  created_at: "2026-08-16"
+  seed: 42                       # 随机种子，保证结果可复现
+  device: "cuda"                 # cuda / cpu
+  use_amp: true                  # 混合精度训练（GPU 加速、省显存）
+
+# -------------------- 模型配置 --------------------
+model:
+  architecture: "resnet50"
+  pretrained: "IMAGENET1K_V2"    # ImageNet 预训练权重（迁移学习）
+  num_classes: 15
+  input_size: 224                # ResNet50 标准输入尺寸
+  dropout: false                 # 使用 BN，未额外加 Dropout
+
+# -------------------- 数据集配置 --------------------
+data:
+  root: "F:/heima/ai/TMF/项目/train_small"
+  total_images: 35408
+  num_classes: 15
+  format: "ImageFolder（每个子文件夹一个类别，按字母序编号）"
+  split_strategy: "分层抽样 7:2:1"
+  splits:
+    train:
+      ratio: 0.70
+      approx_images: 24786
+      augmentation: true
+    test:
+      ratio: 0.20
+      approx_images: 7082
+      augmentation: false
+    val:
+      ratio: 0.10
+      approx_images: 3540
+      augmentation: false
+
+# 类别列表（按字母序，class_id 0~14，与 ImageFolder 一致）
+classes:
+  - {id: 0,  class_name: "Aphid",                display_name: "小麦蚜虫"}
+  - {id: 1,  class_name: "Black Rust",           display_name: "小麦秆锈病"}
+  - {id: 2,  class_name: "Blast",                display_name: "小麦瘟病"}
+  - {id: 3,  class_name: "Brown Rust",           display_name: "小麦叶锈病"}
+  - {id: 4,  class_name: "Common Root Rot",      display_name: "小麦根腐病"}
+  - {id: 5,  class_name: "Fusarium Head Blight", display_name: "小麦赤霉病"}
+  - {id: 6,  class_name: "Healthy Wheat",        display_name: "健康小麦"}
+  - {id: 7,  class_name: "Leaf Blight",          display_name: "小麦叶枯病"}
+  - {id: 8,  class_name: "Mildew",               display_name: "小麦白粉病"}
+  - {id: 9,  class_name: "Mite",                 display_name: "小麦叶螨"}
+  - {id: 10, class_name: "Septoria",             display_name: "小麦叶斑病"}
+  - {id: 11, class_name: "Smut",                 display_name: "小麦黑粉病"}
+  - {id: 12, class_name: "Stem fly",             display_name: "小麦茎蝇"}
+  - {id: 13, class_name: "Tan spot",             display_name: "小麦褐斑病"}
+  - {id: 14, class_name: "Yellow Rust",          display_name: "小麦条锈病"}
+
+# -------------------- 数据增强与预处理 --------------------
+preprocessing:
+  train:
+    - "Resize(224, 224)"
+    - "RandomHorizontalFlip(p=0.5)"
+    - "RandomRotation(degrees=15)"
+    - "ToTensor()"
+    - "Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])"
+  val_test:
+    - "Resize(224, 224)"
+    - "ToTensor()"
+    - "Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])"
+  note: "Normalize 使用 ImageNet 官方均值/标准差，预测时必须保持一致"
+
+# -------------------- 训练超参数 --------------------
+training:
+  num_epochs: 20
+  batch_size: 32
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+
+  # 优化器
+  optimizer: "Adam"
+  learning_rate: 0.001          # 1e-3
+  label_smoothing: 0.1          # 标签平滑，抑制过拟合
+
+  # 冻结/解冻策略
+  freeze_backbone: true         # 前 10 轮冻结主干，只训分类头
+  unfreeze_epoch: 10            # 第 10 轮解冻全部参数
+  backbone_lr_ratio: 0.1        # 解冻后主干学习率 = lr / 10
+
+  # 学习率调度
+  scheduler: "CosineAnnealingLR"
+  scheduler_start_epoch: 10     # 解冻后启用余弦退火
+  use_scheduler: true
+
+  # 损失函数
+  criterion: "CrossEntropyLoss"
+
+# -------------------- 模型保存策略 --------------------
+checkpoint:
+  save_dir: "./outputs/resnet50_model"
+  best_metric: "val_accuracy"   # 以验证集准确率为标准保存最佳模型
+  best_model: "resnet50_best.pth"
+  last_model: null              # 最后一轮即最佳，未单独保存
+  save_last_epoch: true
+
+# -------------------- 环境依赖 --------------------
+environment:
+  python: "3.9 ~ 3.11"
+  torch: "2.5.1+cu121"
+  torchvision: "0.20.1+cu121"
+  cuda: "12.1 (RTX 3060)"
+  scikit_learn: ">=1.0"
+  matplotlib: ">=3.5"
+  pillow: ">=9.0"
+  tqdm: ">=4.60"
