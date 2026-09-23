@@ -1,0 +1,31 @@
+# ============================================================================
+# 顶层依赖汇总（按仓库内代码的实际 import 整理）
+#
+# 只想跑某个子模块时，用更精确的子文件即可：
+#   backend/requirements.txt          后端 API（含版本锁定）
+#   knowledge/llm/requirements.txt    LLM / RAG 知识问答模块（含版本锁定）
+#
+# 安装：pip install -r requirements.txt
+# ============================================================================
+
+# ---------- 后端 API（版本与 backend/requirements.txt 保持一致） ----------
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6            # FastAPI 接收 multipart/form-data 上传文件所必需
+
+# ---------- 模型推理（models/resnet/inference.py） ----------
+torch==2.0.1
+torchvision
+Pillow==10.1.0
+
+# ---------- 数据处理脚本（database/） ----------
+pandas==2.1.0
+numpy
+PyYAML
+
+# ---------- 外部合作方模拟接口（database/partner_app.py，Flask） ----------
+Flask
+flask-cors
+
+# ---------- 网络请求（天气 / 合作方接口调用） ----------
+requests==2.31.0

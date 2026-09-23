@@ -30,3 +30,9 @@ desktop.ini
 
 # 对接话术（仅本地使用，不入仓库）
 database/对接-模型训练成员话术.md
+
+# 仓库内嵌套的整份项目副本（本地重复拷贝，非仓库内容，勿提交）
+wheat-disease-monitor/
+
+# 重复的数据副本（代码实际读取的是 database/data/ 下的同名文件）
+database/partner_data/
