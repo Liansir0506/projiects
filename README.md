@@ -194,9 +194,9 @@ wheat-disease-monitor/
 |---|---|
 | 数据处理代码、类别映射、处理报告 | `database/` |
 | ResNet50 权重、推理代码、类别顺序 | `models/` |
-| ConvNeXt 权重、推理代码、类别顺序 | `models/convnext/`（待交付） |
+| ConvNeXt 权重、推理代码、类别顺序 | `models/convnext/` |
 | FastAPI 后端、接口文档 | `backend/` |
-| Streamlit 三页前端 | `frontend/`（待交付） |
+| Streamlit 三页前端 | `frontend/` |
 | 15 类病虫害知识库 | `knowledge/` |
 | 天气风险 / 数据库 / 记录统计接口 | `database/partner_*`、后端 `/api/v1/statistics` |
 | 测试报告、演示流程、PPT | 见 `docs/项目交付清单表.md` |
